@@ -65,7 +65,7 @@ int main()
 	
 	while (true)
 	{
-
+		//send(clientSocket, "User 1", 7, 0);
 		ZeroMemory(buff, 4096);
 		//Ожидаем пока клиента получит ответ
 		int bytesRecieved;
@@ -85,7 +85,7 @@ int main()
 
 		//Возвращаем эхо сообщение на клиент
 
-		if (strcmp(buff, "\r\n") == 0)
+		if (bytesRecieved > 0)
 		{
 			if (strcmp(text, "exit") == 0)
 			{
@@ -95,16 +95,12 @@ int main()
 			}
 
 			send(clientSocket, text, (int)strlen(text) + 1, 0);
-			send(clientSocket, "\r\n", 3, 0);
-			ZeroMemory(text, 4096);
-		}
-		else
-		{
-			strcat_s(text, (int)(strlen(text) + strlen(buff)) + 1, buff);
-		}
-	
-	}
 
+			ZeroMemory(text, 4096);
+
+
+		}
+	}
 		//Закрыть  сокет
 		int error = closesocket(clientSocket);
 		// Выключаем WinSock
